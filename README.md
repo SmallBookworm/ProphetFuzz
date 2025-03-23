@@ -84,8 +84,6 @@ The implementations for various components of ProphetFuzz can be found in the fo
 
 ## Usage Example
 
-Here's the English translation:
-
 1. **Using Docker to Configure the Running Environment**
 
    - If you only want to complete the part that interacts with the LLM, you can directly use our pre-installed image (4GB):
