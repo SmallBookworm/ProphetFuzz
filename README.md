@@ -154,7 +154,7 @@ We employ ProphetFuzz to perform persistent fuzzing on the latest versions of th
 
 Thanks to Dawei Wang ([@4ugustus](https://github.com/waugustus)) and Geng Zhou ([@Arbusz](https://github.com/Arbusz)) for their valuable contributions to this project.
 
-## Citing this paper ##
+## Citing This Paper ##
 
 In case you would like to cite ProphetFuzz, you may use the following BibTex entry:
 
@@ -169,3 +169,7 @@ In case you would like to cite ProphetFuzz, you may use the following BibTex ent
   year = {2024}
 }
 ```
+
+## Star History ##
+
+[![Stargazers over time](https://starchart.cc/NASP-THU/ProphetFuzz.svg?variant=adaptive)](https://starchart.cc/NASP-THU/ProphetFuzz)
