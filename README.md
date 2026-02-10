@@ -10,6 +10,11 @@ For more details, please refer to [our paper](https://dl.acm.org/doi/10.1145/365
 
 Due to page limitations, the Appendix of the paper could not be included within the main text. Please refer to [Appendix](Appendix.md).
 
+## 📌 Updates
+
+[2026-02-10] This project is indexed on **DeepWiki**, which provides AI-generated documentation to help better understand the codebase, architecture, and core logic. https://deepwiki.com/NASP-THU/ProphetFuzz
+
+
 ## Structure
 
 ```
