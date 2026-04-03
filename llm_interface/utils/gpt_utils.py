@@ -34,7 +34,7 @@ class GPTUtils:
         response = None
         while True:
             try:
-                response = requests.post("https://api.openai.com/v1/chat/completions", data=json.dumps(data), headers=headers)
+                response = requests.post("https://dashscope.aliyuncs.com/compatible-mode/v1", data=json.dumps(data), headers=headers)
                 response.raise_for_status()
                 break
             except requests.RequestException as e:

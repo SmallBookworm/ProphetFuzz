@@ -42,4 +42,4 @@ echo "[*] Running corpus minimization ..."
 python3 $fuzzing_handler_dir/run_cmin.py --program $program
 
 # echo "[*] All processes completed successfully."
-bash $fuzzing_handler_dir/run_fuzzing.sh -p $program -x
+bash $fuzzing_handler_dir/run_fuzzing.sh -p $program -d 1 -c 1 -r 1
