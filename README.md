@@ -101,7 +101,7 @@ The implementations for various components of ProphetFuzz can be found in the fo
 
    ```
    docker build -t prophetfuzz:latest .
-   docker run -it --privileged=true prophetfuzz bash
+   docker run -it --cpus=1 --name fuzz_1 --privileged prophetfuzz bash
    # 'privileged' is used for setting up the fuzzing environment
    ```
 
