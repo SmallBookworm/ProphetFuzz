@@ -22,7 +22,7 @@ class GPTUtils:
             "Authorization": f"Bearer {self.api_key}"
         }
         data = {
-            "model": model,
+            "model": "deepseek-v3.2",
             "messages": [
                 {"role": "system", "content": f"You are ChatGPT, a large language model trained by OpenAI, based on the GPT-4 architecture.\nKnowledge cutoff: 2023-04\nCurrent date: {datetime.date.today()}"},
                 {"role": "user", "content": prompt},
