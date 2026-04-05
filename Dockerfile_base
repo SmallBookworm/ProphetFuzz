@@ -3,7 +3,7 @@
 # installs LLVM 12 for afl-clang-lto support.
 #
 
-From ubuntu:20.04
+FROM ubuntu:20.04
 # Install required dependencies
 RUN apt update
 

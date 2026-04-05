@@ -81,7 +81,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 	zlib1g-dev \
     libx264-dev \
     xmlto
-RUN pip3 install wllvm sysv-ipc demjson3 networkx isort dotenv
+RUN pip3 install wllvm sysv-ipc demjson3 networkx isort dotenv autoimport requests tqdm
 RUN mkdir /root/dep
 WORKDIR /root/dep
 RUN git clone https://github.com/facebook/zstd; cd zstd; make -j install; ln -s /lib/x86_64-linux-gnu/libzstd.so.1 /lib/x86_64-linux-gnu/libzstd.so
@@ -311,20 +311,22 @@ RUN wget -O- https://dl.xpdfreader.com/old/xpdf-4.03.tar.gz|tar zxv; cd xpdf-4.0
 # Prepare Programs for Configfuzz
 RUN mkdir /root/programs_configfuzz
 WORKDIR /root/programs_configfuzz
-# Gif2png
-RUN wget -O- http://www.catb.org/~esr/gif2png/gif2png-2.5.8.tar.gz | tar zxv; cd gif2png-2.5.8; \
-    asan_configure; \
-    gclang_configure; \
-    sed -i "67a\.SH OPTIONS"  build_orig/share/man/man1/gif2png.1; \
-    export program="gif2png"; export build_flag="-lm -lz -lpng16"; prophetfuzz_process;afl++_process
-## Binutils (c++filt and nm)
-RUN wget -O- https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.gz| tar zxv; cd binutils-2.37; \
-    sed -i '144i\  FILE *file;' binutils/cxxfilt.c; \
-    sed -i '208c\        file = fopen(argv[optind], "r");\n        if (!file) {\n            perror("Error opening file");\n            return 1;\n        }' binutils/cxxfilt.c; \
-    sed -i 's/c = getchar ();/c = fgetc(file);/g' binutils/cxxfilt.c; \
-    asan_configure; \
-    gclang_configure; \
-    export build_flag="-lc -ldl"; for program in c++filt nm; do export program=${program}; prophetfuzz_process;afl++_process; done
+# # Gif2png
+# RUN wget -O- http://www.catb.org/~esr/gif2png/gif2png-2.5.8.tar.gz | tar zxv; cd gif2png-2.5.8; \
+#     asan_configure; \
+#     gclang_configure; \
+#     sed -i "67a\.SH OPTIONS"  build_orig/share/man/man1/gif2png.1; \
+#     export program="gif2png"; export build_flag="-lm -lz -lpng16"; prophetfuzz_process;afl++_process
+# ## Binutils (c++filt and nm)
+# RUN wget -O- https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.gz| tar zxv; cd binutils-2.37; \
+#     sed -i '144i\  FILE *file;' binutils/cxxfilt.c; \
+#     sed -i '208c\        file = fopen(argv[optind], "r");\n        if (!file) {\n            perror("Error opening file");\n            return 1;\n        }' binutils/cxxfilt.c; \
+#     sed -i 's/c = getchar ();/c = fgetc(file);/g' binutils/cxxfilt.c; \
+#     asan_configure; \
+#     gclang_configure; \
+#     export build_flag="-lc -ldl"; for program in c++filt nm; do export program=${program}; prophetfuzz_process;afl++_process; done
 
+# Update
+COPY . /root/ProphetFuzz
 # All finished
 WORKDIR /root/ProphetFuzz

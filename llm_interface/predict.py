@@ -16,7 +16,7 @@ prompt_path = sys.path[0]
 project_path = os.path.abspath(os.path.join(prompt_path, ".."))
 manpage_path = os.path.join(project_path, "manpage_parser")
 
-choice_number = 10
+choice_number = 4
 
 model = "gpt-4-1106-preview"
 
@@ -831,6 +831,7 @@ if __name__ == "__main__":
     checked_combination_data = checkCombinations(ret_combination_list, relationships)
 
     output_file_path = os.path.join(prompt_path, "output", f"predicted_combinations_{name}.json")
+    os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
     with open(output_file_path, "w") as f:
         f.write(json.dumps(checked_combination_data))
     print(f"[OK] Done! The output is saved in {output_file_path}.")

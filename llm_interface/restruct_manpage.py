@@ -15,7 +15,7 @@ option_utils = OptionUtils()
 prompt_path = sys.path[0]
 project_path = os.path.abspath(os.path.join(prompt_path, ".."))
 
-choice_number = 10
+choice_number = 4
 ratio = 0.5
 
 def splitJointOptionsGPT(option_data, model):
@@ -108,6 +108,7 @@ if __name__ == "__main__":
         print(f"[INFO] {name} has been modified!")
 
         output_file_path = os.path.join(prompt_path, "input", f"manpage_{name}.json")
+        os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
         with open(output_file_path, "w") as f:
             f.write(json.dumps(new_manpage_data))
     

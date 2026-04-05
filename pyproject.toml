@@ -1,0 +1,11 @@
+[project]
+name = "prophetfuzz"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "demjson3>=3.0.6",
+    "openai>=2.30.0",
+    "tenacity>=9.1.4",
+]

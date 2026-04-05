@@ -18,7 +18,7 @@ option_utils = OptionUtils()
 prompt_path = sys.path[0]
 project_path = os.path.abspath(os.path.join(prompt_path, ".."))
 
-choice_number = 10
+choice_number = 4
 ratio = 0.5
 
 def simplifyConflictList(conflict_list, manpage_data):
@@ -263,11 +263,33 @@ def queryAnswers(option_data, questions, model="gpt-4"):
 
     answers = []
     for res in responses:
+        try:
+            # 1. 尝试匹配 markdown 代码块中的 JSON
+            match = re.search(r'```json\s*(  $ .*? $  )\s*```', res, re.DOTALL)
+            
+            json_str = ""
+            if match:
+                json_str = match.group(1)
+            else:
+                # 2. 兜底方案：如果没有找到代码块，尝试直接查找第一个 [ 和最后一个 ] 之间的内容
+                # 这能防止模型偶尔不加 ```json 标记导致报错
+                start_idx = res.find('[')
+                end_idx = res.rfind(']')
+                if start_idx != -1 and end_idx != -1:
+                    json_str = res[start_idx : end_idx + 1]
+                else:
+                    # 实在找不到，就抛出异常让下面的 except 捕获
+                    raise ValueError("No JSON array found in response")
     
-        # Search for JSON pattern in the input string using re.DOTALL to match across multiple lines
-        check_result = re.search(r'```json\s*(\[.*?\])\s*```', res, re.DOTALL).group(1)
-        answers.append(json.loads(check_result))
-
+            # 3. 解析 JSON
+            answers.append(json.loads(json_str))
+    
+        except Exception as e:
+            print(f"[Error] Failed to parse response: {e}")
+            print(f"[Debug] Raw response: {res}")
+            # 这里可以选择 append 一个空列表或者 None，防止整个程序崩溃
+            answers.append([]) 
+    
     return answers
 
 def checkRelationships(manpage_data, relationships, model="gpt-4"):
@@ -402,6 +424,7 @@ if __name__ == "__main__":
     ret_relationships = extractRelationships(orig_manpage_data, model="gpt-4-1106-preview")
 
     output_file_path = os.path.join(prompt_path, "output", f"unchecked_relationships_{name}.json")
+    os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
     with open(output_file_path, "w") as f:
         f.write(json.dumps(ret_relationships))
 

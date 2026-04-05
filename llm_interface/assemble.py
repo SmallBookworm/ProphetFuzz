@@ -17,7 +17,7 @@ option_utils = OptionUtils()
 prompt_path = sys.path[0]
 project_path = os.path.abspath(os.path.join(prompt_path, ".."))
 
-choice_number_maximum = 10
+choice_number_maximum = 4
 choice_number_per_option = 3
 
 def generateCommands(manpage_data, combinations_data, model):
@@ -109,6 +109,8 @@ def generateCommands(manpage_data, combinations_data, model):
         # For Filter_expression
         if manpage_data["name"] == "jq":
             choice_number += 1
+        
+        choice_number = min(choice_number, 4)
 
         responses = gpt_utils.queryOpenAI(prompt, model, temperature=0.7, n=choice_number)
         
@@ -183,6 +185,7 @@ if __name__ == "__main__":
     command_data_list = generateCommands(orig_manpage_data, combinations_data, model="gpt-4-1106-preview")
        
     output_file_path = os.path.join(prompt_path, "output", f"assembled_command_{name}.json")
+    os.makedirs(os.path.dirname(output_file_path), exist_ok=True)
     with open(output_file_path, "w") as f:
         f.write(json.dumps(command_data_list))
 
