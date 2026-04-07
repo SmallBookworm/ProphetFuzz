@@ -15,7 +15,7 @@ fuzzing_handler_dir="./fuzzing_handler"
 
 echo "[WARN] If you are not within our Docker environment, you may need to manually install dependencies and modify the fuzzing_handler/config.json to specify the path to the program under test."
 
-Execute Python scripts for parsing, processing, and handling the man page
+# Execute Python scripts for parsing, processing, and handling the man page
 echo "Parsing the man page for $program ..."
 python $manpage_parser_dir/parser.py --file $manpage_parser_dir/input/${program}.1
 

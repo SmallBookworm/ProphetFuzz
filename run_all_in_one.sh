@@ -41,5 +41,5 @@ python3 $fuzzing_handler_dir/fix_argvs.py
 echo "[*] Running corpus minimization ..."
 python3 $fuzzing_handler_dir/run_cmin.py --program $program
 
-# echo "[*] All processes completed successfully."
-bash $fuzzing_handler_dir/run_fuzzing.sh -p $program -d 1 -c 1 -r 1
+# echo "[*] All processes completed successfully." change -f to bind cpu core for different container
+# bash $fuzzing_handler_dir/run_fuzzing.sh -p $program -d 1 -c 1 -r 1 -f 0
